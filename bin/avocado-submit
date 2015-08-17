@@ -53,6 +53,7 @@ fi
   --conf spark.kryo.registrator=org.bdgenomics.adam.serialization.ADAMKryoRegistrator \
   --conf spark.kryoserializer.buffer.mb=4 \
   --conf spark.kryo.referenceTracking=true \
+  --conf spark.storage.memoryFraction=0.1 \
   --conf spark.executor.memory=${AVOCADO_EXECUTOR_MEMORY:-4g} \
   ${AVOCADO_OPTS:- } \
   --driver-memory ${AVOCADO_DRIVER_MEMORY:-4g} \

@@ -216,6 +216,7 @@ class Avocado(protected val args: AvocadoArgs) extends BDGSparkCommand[AvocadoAr
     log.info("Post-processing variants.")
     val processedGenotypes: RDD[Genotype] = postProcessVariants(calledVariants, stats).flatMap(variantContext => variantContext.genotypes)
 
+    log.info(s"The genotypes partition size is: ${processedGenotypes.partitions.size}")
     // save variants to output file
     log.info("Writing calls to disk.")
     SaveVariants.time {
