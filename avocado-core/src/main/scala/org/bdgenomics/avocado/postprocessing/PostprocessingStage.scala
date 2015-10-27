@@ -20,7 +20,7 @@ package org.bdgenomics.avocado.postprocessing
 import org.apache.commons.configuration.SubnodeConfiguration
 import org.apache.spark.rdd.RDD
 import org.bdgenomics.formats.avro.{ Genotype, VariantCallingAnnotations }
-import org.bdgenomics.adam.models.{ReferencePosition, VariantContext}
+import org.bdgenomics.adam.models.{ ReferencePosition, VariantContext }
 import org.bdgenomics.avocado.stats.AvocadoConfigAndStats
 
 private[postprocessing] trait PostprocessingStage {
@@ -113,7 +113,7 @@ private[postprocessing] trait GenotypeFilter extends Serializable {
   }
 }
 
-private [postprocessing] trait GenotypeRDDFilter extends Serializable {
+private[postprocessing] trait GenotypeRDDFilter extends Serializable {
 
   /**
    * Abstract method that must be implemented. Implements filtering on all genotypes.
@@ -122,7 +122,7 @@ private [postprocessing] trait GenotypeRDDFilter extends Serializable {
    *                  after filtration to ultimately return variant contexts.
    * @return the filtered genotypes
    */
-  def filterGenotypes (genotypes: RDD[(ReferencePosition, Genotype)]): RDD[(ReferencePosition, Genotype)]
+  def filterGenotypes(genotypes: RDD[(ReferencePosition, Genotype)]): RDD[(ReferencePosition, Genotype)]
 
   /**
    * Entry point for GenotypeRDDFilter. Zips each genotype with it's reference position and then calls filterGenotypes.
@@ -143,6 +143,6 @@ private [postprocessing] trait GenotypeRDDFilter extends Serializable {
     val zippedGenotypes = rdd.flatMap(flatMapHelper)
     val filteredGenotypes = filterGenotypes(zippedGenotypes)
     filteredGenotypes.aggregateByKey[List[Genotype]](List())(aggregateSeqOpHelper, aggregateCombOpHelper)
-                     .map[VariantContext]((x: (ReferencePosition, List[Genotype])) => VariantContext.buildFromGenotypes(x._2))
+      .map[VariantContext]((x: (ReferencePosition, List[Genotype])) => VariantContext.buildFromGenotypes(x._2))
   }
 }
